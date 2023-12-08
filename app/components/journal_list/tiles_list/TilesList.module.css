@@ -1,0 +1,21 @@
+
+.tile {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 25px;
+    border: 1px solid rgba(128, 128, 128, 0.4);
+    padding: 15px;
+    margin: 7px auto;
+}
+
+.info {
+    line-height: 4;
+}
+
+.title {
+    font-size: 15px;
+    font-weight: 700;
+}

@@ -1,0 +1,26 @@
+
+/* Define the initial style of the element */
+.searchbars-enter {
+    opacity: 0;
+    transform: translateY(-100%);
+}
+
+/* Define the style of the element when it becomes visible */
+.searchbars-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 500ms, transform 500ms;
+}
+
+/* Define the style of the element when it starts to exit */
+.searchbars-exit {
+    opacity: 1;
+    transform: translateY(100%);
+}
+
+/* Define the style of the element when it has exited */
+.searchbars-exit-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 500ms, transform 500ms;
+}
