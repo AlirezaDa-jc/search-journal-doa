@@ -30,8 +30,11 @@
     gap: 5px;
 }
 
-/*@media only screen and (max-width: 600px) {*/
-/*    .box {*/
-/*        background-color: lightblue;*/
-/*    }*/
-/*}*/
+.switch{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-items: center;
+    justify-content: center;
+
+}

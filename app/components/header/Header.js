@@ -18,29 +18,46 @@ const CustomButton = styled(Button)({
 });
 
 const Header = () => {
-    const query = useSelector((state) => state.applicationReducer.query);
     const noFetch = useSelector((state) => state.applicationReducer.noFetch);
     const [switchButton, setSwitchButton] = useState(true);//True = High End Network ,False = Low End Network
+    const [keywordButton, setKeywordButton] = useState(false);
     const dispatch = useDispatch();
 
     const handleChange = (e) => {
-        dispatch(setQuery(e.target.value));
+        let search;
+        if (!keywordButton) {
+            search = e.target.value;
+        } else {
+            search = 'bibjson.keywords:' + e.target.value;
+        }
+        dispatch(setQuery(search));
         if (switchButton && e.target.value && e.target.value !== "") {
             dispatch(setNoFetch(false));
-            dispatch(fetchJournals({query: e.target.value, page: 1}))
+            dispatch(fetchJournals({query: search, page: 1}))
         }
+
     };
 
-    const handleSwitchChange = () => {
+    const handleNetworkChange = () => {
         setSwitchButton(!switchButton)
     };
 
+    const handleKeywordButton = () => {
+        setKeywordButton(!keywordButton)
+    };
+
     const handleClick = (e) => {
-        dispatch(setQuery(e.target.value));
+        let search;
+        if (!keywordButton) {
+            search = e.target.value;
+        } else {
+            search = 'bibjson.keywords:' + e.target.value;
+        }
+        dispatch(setQuery(search));
         if (e.target.value && e.target.value !== "") {
             dispatch(setNoFetch(false));
             dispatch(setLoading(true))
-            dispatch(fetchJournals({query: e.target.value, page: 1}))
+            dispatch(fetchJournals({query: search, page: 1}))
             dispatch(setLoading(false))
         }
     };
@@ -60,31 +77,50 @@ const Header = () => {
                 <div className={styles.box}>
                     <CustomTextField
                         label="Search Journals"
-                        value={query}
                         onChange={handleChange}
                     />
                     {switchButton === false && (
                         <CustomButton variant="contained"
-                                      value={query}
                                       onClick={handleClick}>
                             submit
                         </CustomButton>
                     )}
                 </div>
-                <FormControlLabel
-                    control={
-                        <Switch
-                            defaultChecked
-                            color="secondary"
-                            onClick={handleSwitchChange}
-                        />
-                    }
-                    label={
-                        <Box component="div" fontSize={9} sx={{opacity: 0.6}} className={styles.button}>
-                            High-End Network
-                        </Box>
-                    }
-                />
+                <div className={styles.switch}>
+                    <FormControlLabel
+                        control={
+                            <Switch
+                                defaultChecked
+                                color="secondary"
+                                onClick={handleNetworkChange}
+                            />
+                        }
+                        label={
+                            <Box component="div" fontSize={9} sx={{opacity: 0.6}} className={styles.button}>
+                                High-End Network
+                            </Box>
+                        }
+                    />
+                    <FormControlLabel
+                        control={
+                            <Switch
+                                color="secondary"
+                                onClick={handleKeywordButton}
+                            />
+                        }
+                        label={
+                            <Box component="div" fontSize={9} sx={{opacity: 0.6}} className={styles.button}>
+                                Keyword Search
+                            </Box>
+                        }
+                    />
+
+                </div>
+                {keywordButton === true && (
+                    <Box component="div" fontSize={9} sx={{opacity: 0.6}}>
+                        For Keyword Search Use Comma
+                    </Box>
+                )}
             </div>
         </CSSTransition>
 

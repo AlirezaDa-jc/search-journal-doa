@@ -8,7 +8,7 @@ const initialState = {
     pageData: null, // Added Because Task Wanted Us To Set JournalsList To Redux So We Needed Another State for pages
     error: null,
     isLoading: false,
-    query: null,
+    query: [],
     modal: null,
     darkMode: localStorage?.getItem('dark') == true.toString()
 };
@@ -24,13 +24,11 @@ export const fetchJournals = createAsyncThunk(
 )
 
 
-
 // A function that creates a slice for journals state
 const applicationSlice = createSlice({
     name: 'journals',
     initialState: initialState,
     reducers: {
-        // Reducers for journals state
         setNoFetch(state, action) {
             state.noFetch = action.payload
         }
@@ -54,8 +52,6 @@ const applicationSlice = createSlice({
         ,
     },
     extraReducers: (builder) => {
-        // Use `extraReducers` to handle ApplicationReducer that were generated
-        // _outside_ of the slice, such as thunks or in other slices
         builder
             .addCase(fetchJournals.pending, (state) => {
                 state.isLoading = true
@@ -83,7 +79,6 @@ const applicationSlice = createSlice({
     }
 })
 
-// Export the action creators and selectors
 export const {
     setNoFetch,
     setLoading,
@@ -92,5 +87,4 @@ export const {
     setDarkMode,
 } = applicationSlice.actions
 
-// Export the reducer
 export default applicationSlice.reducer
