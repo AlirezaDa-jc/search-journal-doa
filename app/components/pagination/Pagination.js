@@ -2,7 +2,7 @@
 import React, {useEffect, useState} from "react"
 import styles from "./Pagination.module.css"
 import {useDispatch, useSelector} from "react-redux";
-import {fetchJournals} from "@/app/redux/Actions";
+import {fetchJournals} from "@/app/redux/ApplicationReducer";
 import {Button, styled} from "@mui/material";
 
 const PaginationButton = styled(Button)({
@@ -51,7 +51,7 @@ const Pagination = () => {
         range(startPage, endPage, 1)
 
     function changePage(c) {
-        dispatch(fetchJournals(query, c));
+        dispatch(fetchJournals({query: query, page: c}))
     }
 
     return (

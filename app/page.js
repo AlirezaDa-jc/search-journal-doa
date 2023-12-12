@@ -6,7 +6,7 @@ import styles from "./page.module.css";
 import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
 import DarkModeSwitch from "@/app/components/dark_mode_switch/DarkModeSwitch";
 import {useDispatch, useSelector} from "react-redux";
-import {setDarkMode} from "@/app/redux/Actions";
+import {setDarkMode} from "@/app/redux/ApplicationReducer";
 
 const lightTheme = createTheme({
     palette: {

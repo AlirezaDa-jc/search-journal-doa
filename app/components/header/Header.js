@@ -3,10 +3,10 @@
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Box, Button, FormControlLabel, styled, Switch, TextField} from "@mui/material";
-import {fetchJournals, setLoading, setNoFetch, setQuery} from "@/app/redux/Actions";
 import {CSSTransition} from 'react-transition-group';
 import styles from "./Header.module.css";
 import "./HeaderTransition.css";
+import {fetchJournals, setLoading, setNoFetch, setQuery} from "@/app/redux/ApplicationReducer";
 
 const CustomTextField = styled(TextField)({
     width: "60%",
@@ -27,7 +27,7 @@ const Header = () => {
         dispatch(setQuery(e.target.value));
         if (switchButton && e.target.value && e.target.value !== "") {
             dispatch(setNoFetch(false));
-            dispatch(fetchJournals(e.target.value , 1));
+            dispatch(fetchJournals({query: e.target.value, page: 1}))
         }
     };
 
@@ -40,7 +40,7 @@ const Header = () => {
         if (e.target.value && e.target.value !== "") {
             dispatch(setNoFetch(false));
             dispatch(setLoading(true))
-            dispatch(fetchJournals(e.target.value , 1));
+            dispatch(fetchJournals({query: e.target.value, page: 1}))
             dispatch(setLoading(false))
         }
     };
@@ -65,8 +65,8 @@ const Header = () => {
                     />
                     {switchButton === false && (
                         <CustomButton variant="contained"
-                                value={query}
-                                onClick={handleClick}>
+                                      value={query}
+                                      onClick={handleClick}>
                             submit
                         </CustomButton>
                     )}

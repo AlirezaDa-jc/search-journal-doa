@@ -3,7 +3,7 @@ import {FaExclamationCircle} from "react-icons/fa";
 import styles from "./Modal.module.css";
 import {useDispatch, useSelector} from "react-redux";
 import {Button} from "@mui/material";
-import {setModal} from "@/app/redux/Actions";
+import {setModal} from "@/app/redux/ApplicationReducer";
 
 const Modal = () => {
     const modal = useSelector((state) => {

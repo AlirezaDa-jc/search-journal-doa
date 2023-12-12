@@ -25,21 +25,22 @@ const JournalsList = () => {
     };
 
     function sortList(sort) {
+        let journalsCopy = [...journals];
         if (sort === "asc") {
-            setSortedJournals(journals.sort((a, b) => {
+            setSortedJournals(journalsCopy.sort((a, b) => {
                 let dateA = new Date(a.created_date);
                 let dateB = new Date(b.created_date);
                 return dateA - dateB;
             }));
         } else {
-            setSortedJournals(journals.sort((a, b) => {
-                    let dateA = new Date(a.created_date);
-                    let dateB = new Date(b.created_date);
-                    return dateB - dateA;
-                })
-            );
+            setSortedJournals(journalsCopy.sort((a, b) => {
+                let dateA = new Date(a.created_date);
+                let dateB = new Date(b.created_date);
+                return dateB - dateA;
+            }));
         }
     }
+
 
     let view = showType === "table" ?
         <TableList sortedJournals={sortedJournals} sortOrder={sortOrder} handleSort={handleSort}/>
