@@ -8,7 +8,7 @@ const initialState = {
     pageData: null, // Added Because Task Wanted Us To Set JournalsList To Redux So We Needed Another State for pages
     error: null,
     isLoading: false,
-    query: [],
+    query: null,
     modal: null,
     darkMode: localStorage?.getItem('dark') == true.toString()
 };

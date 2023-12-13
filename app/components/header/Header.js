@@ -25,11 +25,12 @@ const Header = () => {
     const dispatch = useDispatch();
 
     const handleChange = (e) => {
-        const search = handleQueryChange(e.target.value);
+        dispatch(setQuery(e.target.value));
         if (switchButton) {
-            if (!search || search === "") {
+            if (!e.target.value || e.target.value === "") {
                 dispatch(removeData());
             } else {
+                const search = keywordButton ? 'bibjson.keywords:' + e.target.value : e.target.value;
                 dispatch(setNoFetch(false));
                 dispatch(fetchJournals({query: search, page: 1, sort: null}))
             }
@@ -42,30 +43,26 @@ const Header = () => {
     };
 
     const handleKeywordButton = () => {
-        setKeywordButton(!keywordButton)
+        let button = !keywordButton
+        setKeywordButton(button)
+        if (query && query !== "") {
+            const search = button ? 'bibjson.keywords:' + query : query;
+            dispatch(setNoFetch(false));
+            dispatch(fetchJournals({query: search, page: 1, sort: null}))
+        }
     };
 
     const handleClick = () => {
         if (!query || query === "") {
             dispatch(removeData());
         } else {
+            const search = keywordButton ? 'bibjson.keywords:' + query : query;
             dispatch(setNoFetch(false));
             dispatch(setLoading(true))
-            dispatch(fetchJournals({query: query, page: 1, sort: null}))
+            dispatch(fetchJournals({query: search, page: 1, sort: null}))
             dispatch(setLoading(false))
         }
     };
-
-    const handleQueryChange = (text) => {
-        let search
-        if (!keywordButton) {
-            search = text;
-        } else {
-            search = 'bibjson.keywords:' + text;
-        }
-        dispatch(setQuery(search));
-        return search;
-    }
 
     return (
         <CSSTransition
