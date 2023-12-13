@@ -15,41 +15,42 @@ const initialState = {
 
 export const fetchJournals = createAsyncThunk(
     'journals/fetchJournals',
-    async ({query, page}) => {
-        const response = await axios.get(
-            `https://doaj.org/api/v3/search/journals/${query}?pageSize=4&page=${page}`
-        )
+    async ({query, page, sort}) => {
+        const url = sort == null ? `https://doaj.org/api/v3/search/journals/${query}?pageSize=4&page=${page}` :
+            `https://doaj.org/api/v3/search/journals/${query}?pageSize=4&page=${page}&sort=created_date:${sort}`
+        const response = await axios.get(url)
         return response.data
     }
 )
 
 
-// A function that creates a slice for journals state
 const applicationSlice = createSlice({
     name: 'journals',
     initialState: initialState,
     reducers: {
         setNoFetch(state, action) {
             state.noFetch = action.payload
-        }
-        ,
+        },
         setLoading(state, action) {
             state.isLoading = action.payload
-        }
-        ,
+        },
         setModal(state, action) {
             state.modal = action.payload
-        }
-        ,
+        },
         setQuery(state, action) {
             state.query = action.payload
-        }
-        ,
+        },
         setDarkMode(state, action) {
             localStorage?.setItem('dark', action.payload)
             state.darkMode = action.payload
+        },
+        removeData(state) {
+            state.noFetch = true
+            state.pageData = []
+            state.journalsList = []
+            state.query = null
         }
-        ,
+
     },
     extraReducers: (builder) => {
         builder
@@ -70,7 +71,7 @@ const applicationSlice = createSlice({
         builder
             .addCase(fetchJournals.rejected, (state, action) => {
                 state.isLoading = false
-                state.error = action.error.message
+                state.error = action.payload.error.message
                 state.modal = {
                     view: true,
                     message: 'Encountered Error, Try Again',
@@ -85,6 +86,7 @@ export const {
     setModal,
     setQuery,
     setDarkMode,
+    removeData
 } = applicationSlice.actions
 
 export default applicationSlice.reducer

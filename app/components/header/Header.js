@@ -6,7 +6,7 @@ import {Box, Button, FormControlLabel, styled, Switch, TextField} from "@mui/mat
 import {CSSTransition} from 'react-transition-group';
 import styles from "./Header.module.css";
 import "./HeaderTransition.css";
-import {fetchJournals, setLoading, setNoFetch, setQuery} from "@/app/redux/ApplicationReducer";
+import {fetchJournals, removeData, setLoading, setNoFetch, setQuery} from "@/app/redux/ApplicationReducer";
 
 const CustomTextField = styled(TextField)({
     width: "60%",
@@ -18,22 +18,21 @@ const CustomButton = styled(Button)({
 });
 
 const Header = () => {
+    const query = useSelector((state) => state.applicationReducer.query);
     const noFetch = useSelector((state) => state.applicationReducer.noFetch);
     const [switchButton, setSwitchButton] = useState(true);//True = High End Network ,False = Low End Network
     const [keywordButton, setKeywordButton] = useState(false);
     const dispatch = useDispatch();
 
     const handleChange = (e) => {
-        let search;
-        if (!keywordButton) {
-            search = e.target.value;
-        } else {
-            search = 'bibjson.keywords:' + e.target.value;
-        }
-        dispatch(setQuery(search));
-        if (switchButton && e.target.value && e.target.value !== "") {
-            dispatch(setNoFetch(false));
-            dispatch(fetchJournals({query: search, page: 1}))
+        const search = handleQueryChange(e.target.value);
+        if (switchButton) {
+            if (!search || search === "") {
+                dispatch(removeData());
+            } else {
+                dispatch(setNoFetch(false));
+                dispatch(fetchJournals({query: search, page: 1, sort: null}))
+            }
         }
 
     };
@@ -46,21 +45,27 @@ const Header = () => {
         setKeywordButton(!keywordButton)
     };
 
-    const handleClick = (e) => {
-        let search;
-        if (!keywordButton) {
-            search = e.target.value;
+    const handleClick = () => {
+        if (!query || query === "") {
+            dispatch(removeData());
         } else {
-            search = 'bibjson.keywords:' + e.target.value;
-        }
-        dispatch(setQuery(search));
-        if (e.target.value && e.target.value !== "") {
             dispatch(setNoFetch(false));
             dispatch(setLoading(true))
-            dispatch(fetchJournals({query: search, page: 1}))
+            dispatch(fetchJournals({query: query, page: 1, sort: null}))
             dispatch(setLoading(false))
         }
     };
+
+    const handleQueryChange = (text) => {
+        let search
+        if (!keywordButton) {
+            search = text;
+        } else {
+            search = 'bibjson.keywords:' + text;
+        }
+        dispatch(setQuery(search));
+        return search;
+    }
 
     return (
         <CSSTransition

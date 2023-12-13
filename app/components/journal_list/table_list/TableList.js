@@ -73,14 +73,14 @@ const TableList = (props) => {
                             variant="subtitle1">Language: {journal.bibjson.language.map((lang) => lang).join(", ")}</Typography>
                         <Typography variant="subtitle1">Publishers: {journal.bibjson.publisher.name}</Typography>
                         <Typography variant="subtitle1">Eissn: {journal.bibjson.eissn}</Typography>
-                        <Typography variant="subtitle1">Created Date: {journal.created_date}</Typography>
+                        <Typography variant="subtitle1">Created Date: {new Date(journal.created_date).toDateString()}</Typography>
                     </Paper>
                 ))}
             </div>
         );
     }
 
-    const isSmallScreen = useMediaQuery("(max-width:900px)");
+    const isSmallScreen = useMediaQuery("(max-width:1000px)");
     return (<div>{isSmallScreen ? <SmallScreenTable/> : <LargeScreenTable/>}</div>);
 }
 

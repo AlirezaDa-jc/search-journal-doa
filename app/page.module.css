@@ -1,14 +1,16 @@
 .container {
-    margin: 16px 30px;
+    width: 80%;
+    margin: 16px auto;
 }
 
 .fullWidthHeader {
     position: fixed;
-    width: 100%;
+    width: 80%;
     height: 100%;
     margin: auto;
     top: 0;
-    left: 0;
+    left: auto;
+    z-index: 1;
 }
 
 .normalHeader {
@@ -19,8 +21,7 @@
 }
 
 .headerContainer {
-    width: 100%;
-    margin: 10px auto;
+    margin: auto;
 }
 
 .emptyList {

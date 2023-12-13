@@ -2,7 +2,7 @@
 /* Define the initial style of the element */
 .searchbars-enter {
     opacity: 0;
-    transform: translateY(-100%);
+    transform: translateY(-30%);
 }
 
 /* Define the style of the element when it becomes visible */
