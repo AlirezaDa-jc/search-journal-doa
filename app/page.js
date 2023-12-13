@@ -37,9 +37,8 @@ export default function Home() {
     const noFetch = useSelector((state) => state.applicationReducer.noFetch);
     const dispatch = useDispatch();
 
-    const handleThemeChange = () => {
-        localStorage.setItem('dark', !darkMode)
-        dispatch(setDarkMode(!darkMode));
+    const handleThemeChange = (e) => {
+        dispatch(setDarkMode(e));
     };
 
     return (

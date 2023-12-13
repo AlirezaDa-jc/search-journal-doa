@@ -10,12 +10,11 @@ const DarkModeSwitch = (props) => {
             <ToggleButtonGroup
                 value={props.darkMode}
                 exclusive
-                onChange={props.handleThemeChange}
             >
-                <ToggleButton value="dark">
+                <ToggleButton value={true} onClick={() => props.handleThemeChange(true)}>
                     <FaMoon />
                 </ToggleButton>
-                <ToggleButton value="light">
+                <ToggleButton value={false} onClick={() => props.handleThemeChange(false)}>
                     <FaSun />
                 </ToggleButton>
             </ToggleButtonGroup>
