@@ -4,3 +4,10 @@
     top: 15px;
     z-index: 3;
 }
+
+@media screen and (max-width: 400px) {
+    .container {
+        right: 5px;
+        top: 5px;
+    }
+}
