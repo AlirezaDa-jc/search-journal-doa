@@ -48,8 +48,8 @@ const Pagination = (props) => {
         <div className={styles.pagination}>
             {pages.map((page, index) => {
                 return (
-                    <div>
-                        <div key={index} className={currentPage === page ? `${styles.pageItem} ${styles.active}`
+                    <div key={index}>
+                        <div className={currentPage === page ? `${styles.pageItem} ${styles.active}`
                             : `${styles.pageItem}`}>
                             <a className="page-link" href="#" onClick={changePage(page)}>{page}</a>
                         </div>
